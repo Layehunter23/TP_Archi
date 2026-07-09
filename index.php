@@ -17,60 +17,69 @@
         
 
              <?php 
-        $user = "root";
-        $pass = "";
-        $pdo = new PDO("mysql:host=localhost;dbname=mglsi_news",$user,$pass);
-         $sql1 = "SELECT * from categorie";
-        $request = $pdo->query($sql1);
-        $categorie = $request->fetchAll(PDO::FETCH_ASSOC);
-           
+            require_once __DIR__ . '/models/Article.php';
+            $articleModel = new Article();
+            $categorie = $articleModel->getCategorie();
+
 
             
-            
-                 foreach($categorie as $cat){
+            foreach($categorie as $cat){
             ?>
                  <a href="index.php?id=<?php echo $cat['id']?>"><li><?php print_r($cat['libelle']); ?></li></a>
-                
+
              <?php }?> 
 
                 
             <li>
         </ul>
     </nav>
-
+        
     <?php
-    $sql = "SELECT * from article";
-    $request = $pdo->query($sql);
-    $article = $request->fetchAll(PDO::FETCH_ASSOC);
-
-  
-     if (isset($_GET['id'])){
-                $idsele = $_GET['id'];
-                $sql2 = "SELECT * from article where categorie=$idsele";
-                $request = $pdo->query($sql2);
-                $menu = $request->fetchAll(PDO::FETCH_ASSOC);
-
+               
+                $menu = $articleModel->getArticleByCategorie();
+                
+              if (isset($_GET['id'])){
                   foreach($menu as $m){
 ?>
         <section>
             <div>
                 <p><?php print_r($m['titre'])?></p>
                 <p><?php print_r($m['contenu']);?></p> 
-                <button>Voir Plus</button>
+                <a href="index.php?idCont=<?php echo $m['id']?>"> <button name="supp">Voir Plus</button></a>
+                
+                <a href="index.php?idSupp=<?php echo $m['id']?>"> <button name="supp">Supprimer</button></a>
             </div>
 </section>
-<?php } ?>
+<?php }} ?>
 <?php
-                  }
-    if(!isset($_GET['id'])){
+               
+    
+    $article = $articleModel->getAllArticle();
+    $supp = $articleModel -> DeleteArticleById();
+    $single = $articleModel->getArticleById();
+
+    if(isset($_GET['idCont'])){
+        ?>
+        <aside>
+        <h1> <?php echo $single['titre'] ?></h1>
+        <p>Publie le <?php echo $single['dateCreation']?></p>
+        <p><?php echo  $single['contenu'] ?></p>
+
+        <a href="index.php"><button>Retour</button>
+</aside>
+        <?php
+    }
+    if(!isset($_GET['id']) && !isset($_GET['idCont'])){
     foreach($article as $ar){
 ?>
         <section>
             <div>
                 <p><?php print_r($ar['titre'])?></p>
-                <p><?php print_r($ar['contenu']);?></p> 
-                <button>Voir Plus</button>
-                <button name="supp">Supprimer</button>
+                <p><?php print_r($ar['contenu']);?></p>  
+
+                <a href="index.php?idCont=<?php echo $ar['id']?>"> <button name="supp">Voir Plus</button></a>
+                
+               <a href="index.php?idSupp=<?php echo $ar['id']?>"> <button name="supp">Supprimer</button></a>
 
                 
             </div>
