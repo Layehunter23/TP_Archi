@@ -1,0 +1,42 @@
+nav{
+    display: flex;
+    justify-content: center;
+    background-color: coral;
+    width:100%;
+}
+
+ul{
+    display: flex;
+    justify-content: center;
+    gap: 23px;
+    list-style: none;
+    font-size:larger;
+    
+}
+body{
+    background-color: peru;
+}
+a{
+    text-decoration: none;
+    
+}
+.logo{
+    display: flex;
+    justify-content: flex-start;
+}
+div{
+    background-color: darkturquoise;
+    border-radius: 23px;
+    padding:20px;
+    width: 80%;
+}
+
+section{
+    display: flex;
+    justify-content: center;
+    gap:23px;
+    margin-top: 50px;    
+}
+li{
+    color:darkgreen;
+}
