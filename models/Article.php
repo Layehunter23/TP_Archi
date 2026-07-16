@@ -49,7 +49,7 @@ function DeleteArticleById(){
     $user = "mglsi_user";
         $pass = "passer";
         $pdo = new PDO("mysql:host=localhost;dbname=mglsi_news",$user,$pass);
-        $sql = "DELETE FROM article where id=$idContenu";
+        $sql = "DELETE FROM article where id=$idSupp";
         $request = $pdo->query($sql);
     ?>
     <script>alert(`Article Supprime`)</script>
